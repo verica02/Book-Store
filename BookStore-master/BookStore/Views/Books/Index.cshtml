@@ -1,0 +1,186 @@
+﻿@model BookStore.ViewModels.BookGenreFilterViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<form asp-controller="Books" asp-action="Index" method="get">
+    <p>
+        <select asp-for="BookGenre" asp-items="Model.Genres">
+            <option value="">All</option>
+        </select>
+
+        <input type="text" class="inputSearch" asp-for="SearchString" placeholder="Search by title..." />
+        
+        <button class="searchBtn" type="submit"><i class="bi bi-search"></i></button>
+    </p>
+</form>
+
+
+<style>
+
+    .searchBtn{
+        background: red;
+        color: white;
+        border-radius: 25px
+    }
+
+    .searchBtn:hover {
+
+            border: 1px solid red;
+            background: #fff;
+            border-radius: 25px
+        }
+
+    .searchBtn>i{
+            color: white;
+    }
+
+        .searchBtn:hover > i {
+            color: red;
+    }
+
+    .detailsBtn:hover {
+        background-color: #dc143c;
+        color: white;
+    }
+
+    .Delbtn{
+        background-color: #dc143c;
+        color: white;
+    }
+
+    .Delbtn:hover {
+        background-color: #9a0e2a;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+        color: white;
+    }
+
+    .AddBtn{
+        background-color: #fff;
+        border: 1px solid red;
+        color: #dc143c;
+    }
+    .AddBtn:hover{
+            background-color: #dc143c;
+            color: white;
+        }
+
+        .inputSearch:focus {
+        appearance: none;
+        border: none;
+        outline: none;
+        border-bottom: .2em solid #E91E63;
+        background: rgba(#E91E63, .2);
+        border-radius: .2em .2em 0 0;
+        color: #E91E63;
+        }
+
+    input[type=text] {
+        border-bottom: 1px solid red;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        margin-left: 10px;
+    }
+
+    select {
+        background-color: #fff;
+        border: 1px solid #dc143c;
+        border-radius: 0.25rem;
+        color: #000;
+        cursor: pointer;
+        padding: 6px 10px;
+    }
+
+    &::before {
+        border-bottom-color: red;
+    }
+
+    &::after {
+        border-top-color: red;
+    }
+
+    &:focus {
+        outline-color: transparent;
+        border-top-color: red;
+    }
+
+
+
+</style>
+
+
+    <div class="text-white ">
+        <a asp-controller="Books" asp-action="Create" class="btn AddBtn">
+            <i class="bi bi-plus-circle"></i> Add New
+        </a>
+    </div>
+    <br />
+
+
+<div class="row">
+    @foreach (var item in Model.Books)
+    {
+        <div class="col-md-4 col-xs-6 border-primary mb-3">
+            <div class="card mb-3" style="max-width: 520px; border:1px solid red;">
+                <div class="row g-0">
+                    <div class="col-md-12">
+                        <div class="card-header text-bold bg-opacity-50" style=" color: #fff; background: #dc143c;">
+                            <p class="card-text">
+                                <h5 class="card-title">
+                                    @item.Title
+                                        <a class="text-white float-end" asp-controller="Books" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i></a>
+                                </h5>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <img src="@item.FrontPage" width="210px" height="300px" alt="">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card-body">
+                            <p class="card-text">@item.Description</p>
+                            <p class="card-text"><b>Author: </b>@item.Author.FullName</p>
+                            <p class="card-text"><b>Year Published: </b>@item.YearPublished</p>
+                            <p class="card-text">
+                                <b>Average Rating: </b>
+                                @if (item.Reviews != null)
+                                {
+                                    double sum = 0, n = 0;
+
+                                    @foreach (var x in item.Reviews)
+                                    {
+                                        sum += x.Rating;
+                                        n++;
+
+                                    }
+
+                                    double result = sum / n;
+                                    @result
+                                }
+
+
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="card-footer">
+                            <p class="card-text">
+                                <a class="btn detailsBtn float-end" style="border:1px solid red;" asp-action="Details" asp-route-id="@item.Id"><i class="bi bi-eye-fill"></i> Show Details</a>
+
+
+                                <a class="btn Delbtn"  asp-action="Delete" asp-route-id="@item.Id"><i class="bi bi-trash"></i>Delete </a>
+                                
+                                
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    }
+</div>

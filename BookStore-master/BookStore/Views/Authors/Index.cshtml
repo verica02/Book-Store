@@ -1,0 +1,177 @@
+﻿@model BookStore.ViewModels.AuthorTitleViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+
+<style>
+    .AddBtn {
+        background-color: #fff;
+        border: 1px solid red;
+        color: #dc143c;
+    }
+
+        .AddBtn:hover {
+            background-color: #dc143c;
+            color: white;
+        }
+
+
+    .searchBtn {
+        background: red;
+        color: white;
+        border-radius: 25px
+    }
+
+        .searchBtn:hover {
+            border: 1px solid red;
+            background: #fff;
+            border-radius: 25px
+        }
+
+        .searchBtn > i {
+            color: white;
+        }
+
+        .searchBtn:hover > i {
+            color: red;
+        }
+
+    .detailsBtn:hover {
+        background-color: #dc143c;
+        color: white;
+    }
+
+    .Delbtn {
+        background-color: #dc143c;
+        color: white;
+    }
+
+        .Delbtn:hover {
+            background-color: #9a0e2a;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+            color: white;
+        }
+
+    .AddBtn {
+        background-color: #fff;
+        border: 1px solid red;
+        color: #dc143c;
+    }
+
+        .AddBtn:hover {
+            background-color: #dc143c;
+            color: white;
+        }
+
+    .inputSearch:focus {
+        appearance: none;
+        border: none;
+        outline: none;
+        border-bottom: .2em solid #E91E63;
+        background: rgba(#E91E63, .2);
+        border-radius: .2em .2em 0 0;
+        color: #E91E63;
+    }
+
+    input[type=text] {
+        border-bottom: 1px solid red;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        margin-left: 10px;
+    }
+
+    select {
+        background-color: #fff;
+        border: 1px solid #dc143c;
+        border-radius: 0.25rem;
+        color: #000;
+        cursor: pointer;
+        padding: 6px 10px;
+    }
+
+    &::before {
+        border-bottom-color: red;
+    }
+
+    &::after {
+        border-top-color: red;
+    }
+
+    &:focus {
+        outline-color: transparent;
+        border-top-color: red;
+    }
+</style>
+
+<form asp-controller="Authors" asp-action="Index" method="get">
+    <p>
+        <select asp-for="AuthorNationality" asp-items="Model.Nationality">
+            <option value="">All</option>
+        </select>
+        <input type="text" class="inputSearch" asp-for="SearchString" placeholder="Search by name..." />
+        <input type="text" class="inputSearch" asp-for="SearchStringLastName" placeholder="Search by last name..." />
+        <button type="submit" class="searchBtn"><i class="bi bi-search"></i></button>
+    </p>
+</form>
+
+
+    <div class="text-white offset-md-2">
+    <a asp-controller="Authors" asp-action="Create" class="btn AddBtn">
+            <i class="bi bi-plus-circle"></i> Add New
+        </a>
+    </div>
+
+
+
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Authors[0].FullName)</th>
+                    <th>@Html.DisplayNameFor(model => model.Authors[0].BirthDate)</th>
+                    <th>@Html.DisplayNameFor(model => model.Authors[0].Nationality)</th>
+                    <th>@Html.DisplayNameFor(model => model.Authors[0].Gender)</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Authors)
+                {
+                    <tr>
+                        <td class="align-middle">
+                            @Html.DisplayFor(modelItem => item.FullName)
+                        </td>
+                        <td class="align-middle">
+                            @Html.DisplayFor(modelItem => item.BirthDate)
+                        </td>
+                        <td class="align-middle">
+                            @Html.DisplayFor(modelItem => item.Nationality)
+                        </td>
+                        <td class="align-middle">
+                            @Html.DisplayFor(modelItem => item.Gender)
+                        </td>
+                        <td class="align-middle">
+                           
+                            
+                                <a class="btn btn-outline-primary" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i>Edit </a> 
+                            
+                            
+                            <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.Id"><i class="bi bi-eye"></i>Details </a> 
+                            
+                            
+                                <a class="btn btn-danger text-white" asp-action="Delete" asp-route-id="@item.Id"><i class="bi bi-trash"></i>Delete </a>
+                            
+                            
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>

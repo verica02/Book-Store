@@ -1,0 +1,57 @@
+﻿@model BookStore.Models.Review
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+<style>
+
+    .DetailBtn {
+        background-color: #dc143c;
+        color: white;
+    }
+
+        .DetailBtn:hover {
+            background-color: #fff;
+            border: 1px solid red;
+            color: #dc143c;
+        }
+</style>
+
+
+<div class="row text">
+    <div class="col-md-8 offset-2">
+        <p>
+            <h1 style ="display:inline">Details for Review By</h1>
+            <h1 style=" display:inline; color: #dc143c;">@Model.AppUser</h1>
+        </p>
+        <div class="row">
+            <div class="col-md-8 offset-2">
+
+                <div class="form-group">
+                    <label asp-for="AppUser" class="control-label"></label>
+                    <input asp-for="AppUser" class="form-control" readonly />
+
+                    <label asp-for="Comment" class="control-label"></label>
+                    <input asp-for="Comment" class="form-control" readonly />
+
+                    <label asp-for="Rating" class="control-label"></label>
+                    <input asp-for="Rating" class="form-control" readonly />
+
+
+                    <label class="control-label">Book</label>
+                    @if (Model.BookId != null)
+                    {
+                        <a asp-controller="Books" asp-action="Details" asp-route-id="@Model.BookId" class="form-control" style="text-decoration: none" readonly>@Html.DisplayFor(model => model.Book.Title)</a>
+                    }
+
+                </div>
+                <br />
+                <div class="form-group">
+                    <a class="btn DetailBtn" asp-action="Index">Show All</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

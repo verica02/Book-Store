@@ -1,0 +1,57 @@
+﻿@model Author
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<style>
+
+    .DetailBtn1 {
+        background-color: #fff;
+        border: 1px solid red;
+        color: #dc143c;
+    }
+
+        .DetailBtn1:hover {
+            background-color: #dc143c;
+            color: white;
+        }
+</style>
+
+<div class="row text">
+    <div class="col-md-8 offset-2">
+        <p>
+            <h1 style="color:#dc143c; display:inline">Delete</h1>
+            <h1 style="display:inline">confirmation for @Model.FullName</h1>
+        </p>
+        <div class="row">
+            <div class="col-md-8 offset-2">
+
+                <div class="form-group">
+                    <label asp-for="FirstName" class="control-label"></label>
+                    <input asp-for="FirstName" class="form-control" readonly />
+
+                    <label asp-for="LastName" class="control-label"></label>
+                    <input asp-for="LastName" class="form-control" readonly />
+
+                    <label asp-for="BirthDate" class="control-label"></label>
+                    <input asp-for="BirthDate" class="form-control" readonly />
+
+                    <label asp-for="Nationality" class="control-label"></label>
+                    <input asp-for="Nationality" class="form-control" readonly />
+
+                    <label asp-for="Gender" class="control-label"></label>
+                    <input asp-for="Gender" class="form-control" readonly />
+                </div>
+                <br />
+                <div class="form-group">
+                    <form asp-action="Delete">
+                        <input type="hidden" asp-for="Id" />
+                        <input type="submit" value="Confirm" class="btn btn-danger float-end" />
+                    </form>
+                    <a class="btn DetailBtn1" asp-action="Index">Show All</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

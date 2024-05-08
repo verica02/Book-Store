@@ -1,0 +1,48 @@
+﻿@model BookStore.Models.Genre
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<style>
+
+    .DetailBtn{
+        background-color: #dc143c;
+        color: white;
+    }
+
+    .DetailBtn:hover{
+            background-color: #fff;
+            border: 1px solid red;
+            color: #dc143c;
+        }
+
+   
+</style>
+
+
+
+<h1>Details</h1>
+
+<div class="row text">
+    <div class="col-md-8 offset-2">
+        <p>
+            <h1 style=" display:inline">Details for</h1>
+            <h1 style=" display:inline; color: #dc143c;">@Model.GenreName</h1>
+        </p>
+        <div class="row">
+            <div class="col-md-8 offset-2">
+
+                <div class="form-group">
+                    <label asp-for="GenreName" class="control-label"></label>
+                    <input asp-for="GenreName" class="form-control" readonly />
+                    <span asp-validation-for="GenreName" class="text-danger"></span>
+                </div>
+                <br />
+                <div class="form-group">
+                    <a class="btn DetailBtn" asp-action="Index">Show All</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

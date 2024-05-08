@@ -1,0 +1,59 @@
+﻿@model BookStore.Models.Genre
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<style>
+
+    .DetailBtn {
+        background-color: #dc143c;
+        color: white;
+    }
+
+        .DetailBtn:hover {
+            background-color: #fff;
+            border: 1px solid red;
+            color: #dc143c;
+        }
+
+    .DetailBtn1 {
+        background-color: #fff;
+        border: 1px solid red;
+        color: #dc143c;
+    }
+
+        .DetailBtn1:hover {
+            background-color: #dc143c;
+            color: white;
+        }
+</style>
+
+<div class="row text">
+    <div class="col-md-8 offset-2">
+        <p>
+            <h1 style="color:#dc143c">Add a New Genre</h1>
+        </p>
+        <div class="row">
+            <div class="col-md-8 offset-2">
+                <form asp-action="Create" asp-controller="Genres">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="GenreName" class="control-label"></label>
+                        <input asp-for="GenreName" class="form-control" />
+                        <span asp-validation-for="GenreName" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn DetailBtn float-end" />
+                        <a class="btn DetailBtn1" asp-action="Index">Show All</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

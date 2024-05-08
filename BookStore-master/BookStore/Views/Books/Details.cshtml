@@ -1,0 +1,102 @@
+﻿@model BookStore.Models.Book
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<style>
+
+    .DetailBtn{
+        background-color: #dc143c;
+        color: white;
+    }
+
+    .DetailBtn:hover{
+            background-color: #fff;
+            border: 1px solid red;
+            color: #dc143c;
+        }
+
+   
+</style>
+
+<div class="row text">
+    <div class="col-md-8 offset-2">
+
+        <p>
+            <h1 style=" display:inline">Details for</h1>
+            <h1 style=" display:inline; color: #dc143c;">@Model.Title</h1>
+        </p>
+
+        <div class="row">
+            <div class="col-md-8 offset-2">
+
+                <div class="form-group">
+                    <label asp-for="Title" class="control-label"></label>
+                    <input asp-for="Title" class="form-control" readonly />
+
+                    <label asp-for="YearPublished" class="control-label"></label>
+                    <input asp-for="YearPublished" class="form-control" readonly />
+
+                    <label asp-for="NumPages" class="control-label"></label>
+                    <input asp-for="NumPages" class="form-control" readonly />
+
+                    <label asp-for="Description" class="control-label"></label>
+                    <input asp-for="Description" class="form-control" readonly />
+
+                    <label asp-for="Publisher" class="control-label"></label>
+                    <input asp-for="Publisher" class="form-control" readonly />
+
+                    <label class="control-label">Author</label>
+                    @if (Model.Author != null)
+                    {
+                        <a asp-controller="Authors" asp-action="Details" class="form-control" style="text-decoration: none" readonly asp-route-id="@Model.Author.Id">@Model.Author.FullName</a>
+                    }
+
+                </div>
+                <br />
+                <div class="form-group">
+                    <a class="btn DetailBtn" asp-action="Index">Show All</a>
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("User"))
+                    {
+                        <a class="btn btn-success text-white float-end"><i class="bi bi-cart-plus"></i> Buy</a>
+                    }
+                    
+                </div><br />
+                
+                    <div class="form-group">
+                    
+                        <div class="border-primary">
+                            <div class="card form-control" style="width: 100%">
+                                <p class="card-text">
+                                <h5 class="card-title" style="color:#dc143c;" ">
+                                        Reviews
+                                    </h5>
+                                    <hr />
+                                </p>
+                                <div class="card-body">
+                                    @if (Model.Reviews != null)
+                                    {
+                                        @foreach (var item in Model.Reviews)
+                                        {
+                                            <p class="card-text"><b>@item.AppUser: </b>@item.Comment (@item.Rating out of 5)</p>
+                                        }
+
+                                    }
+                                </div>
+                            </div>
+
+                        </div>
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("User"))
+                    {
+                        <a asp-controller="Reviews" asp-action="Create" class="form-control" style="text-decoration: none">Add A Review</a>
+                        
+                    }
+
+                
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
