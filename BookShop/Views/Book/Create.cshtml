@@ -1,0 +1,64 @@
+﻿@model MakeupShop.ViewModels.BookModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="row text">
+    <div class="col-md-8 offset-2">
+        <p>
+            <h1>Add a New Book</h1>
+        </p>
+        <div class="row">
+            <div class="col-md-8 offset-2">
+                <form enctype="multipart/form-data" asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Book.Title" class="control-label"></label>
+                        <input asp-for="Book.Title" class="form-control" />
+                        <span asp-validation-for="Book.Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Book.Description" class="control-label"></label>
+                        <input asp-for="Book.Description" class="form-control" />
+                        <span asp-validation-for="Book.Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Book.YearPublished" class="control-label"></label>
+                        <input asp-for="Book.YearPublished" class="form-control" />
+                        <span asp-validation-for="Book.YearPublished" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Image" class="control-label"></label>
+                        <div class="custom-file">
+                            <input asp-for="Image" class="custom-file-input" id="customFile">
+                        </div>
+                        <span asp-validation-for="Image" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Book.Genre" class="control-label"></label>
+                        <input asp-for="Book.Genre" class="form-control" />
+                        <span asp-validation-for="Book.Genre" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Book.AuthorId" class="control-label"></label>
+                        <select asp-for="Book.AuthorId" class="form-control" asp-items="ViewBag.BrandId">
+                            <option value="">Select Brand</option>
+                        </select>
+                    </div><br />
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-outline-dark float-end" />
+                        <a class="btn btn-outline-secondary" asp-action="Index">Back to List</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

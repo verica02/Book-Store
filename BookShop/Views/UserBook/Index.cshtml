@@ -1,0 +1,23 @@
+﻿@model IEnumerable<MakeupShop.Models.UserBook>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4 col-xs-6 border-primary mb-3">
+            <div class="card mb-3" style="max-width: 520px;">
+                <img class="card-img-top" src="~/images/@item.Book.Image" width="210px" height="300px" asp-append-version="true">
+
+                <div class="card-body">
+                    <h5 class="card-title">@item.Book.Title</h5>
+                    <p class="card-text"><b>User: </b>@item.AppUser</p>
+                    
+                </div>
+            </div>
+        </div>
+    }
+</div>
+

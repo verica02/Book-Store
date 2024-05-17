@@ -1,0 +1,74 @@
+﻿@model MakeupShop.ViewModels.AuthorTitleViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<form asp-controller="Brands" asp-action="Index" method="get">
+    <p>
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="inputGroup-sizing-default">Title</span>
+            <input type="text" asp-for="SearchString" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+        </div>
+
+        <input type="submit" class="btn btn-outline-dark" value="Seach" />
+    </p>
+</form>
+
+<div class="text-white ">
+    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+    {
+        <a asp-controller="Brands" asp-action="Create" class="btn btn-outline-dark">
+            <i class="bi bi-plus-circle"></i> Add New
+        </a>
+    }
+    
+</div>
+<br />
+
+<div class="row">
+    @foreach (var item in Model.Authors)
+    {
+        <div class="col-md-4 col-xs-6 border-primary mb-3">
+            <div class="card mb-3" style="max-width: 520px;">
+                <img class="card-img-top" src="~/images/@item.Image"
+                     width="210px" height="300px"
+                 asp-append-version="true">
+
+                 <div class="card-body">
+                    <a class="card-title brand" asp-action="ShowBook" asp-route-id="@item.Id">@item.Title</a>
+                    <textarea rows="5" class="txtarea" style="width: 100%;">@item.Description</textarea>
+
+                    @{
+                        DateTime dateTime = item.ReleaseDate;
+                        string dateOnly = dateTime.ToString("dd-MM-yyyy");
+                    }
+                    <p class="card-text"><b>Release Date: </b>@dateOnly</p>
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <p class="card-text">
+
+
+                            @if (item.CatalogDownloadUrl == null)
+                            {
+                                <a class="btn btn-outline-dark float-end" asp-action="Upload" asp-route-id="@item.Id"><i class="bi bi-upload"></i> Upload Catalog</a>
+                            }
+                            <a class="btn btn-outline-dark" asp-controller="Authors" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i> Edit</a>
+
+
+
+
+                        </p>
+                    }
+                    
+                    <a class="btn btn-outline-dark" asp-action="Details" asp-route-id="@item.Id"><i class="bi bi-eye-fill"></i> Show Details</a>
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <a class="btn btn-danger text-white float-end" asp-action="Delete" asp-route-id="@item.Id"><i class="bi bi-trash"></i> Delete </a>
+                    }
+                    
+                 </div>
+            </div>
+        </div>
+    }
+</div>

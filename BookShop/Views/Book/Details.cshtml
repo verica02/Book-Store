@@ -1,0 +1,86 @@
+﻿@model MakeupShop.Models.Book
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="row text">
+    <div class="col-md-10 offset-1">
+        <p class=".text-center">
+            <h1>Details for @Model.Title</h1>
+        </p><hr />
+        <div class="row">
+            <div class="col-md-5">
+                <img src="~/images/@Model.Image"
+                     width="310px" height="400px"
+                     asp-append-version="true" />
+            </div>
+            <div class="col-md-7">
+                <label asp-for="Title" class="fw-bold control-label"></label>
+                <input asp-for="Title" class="form-control" readonly />
+
+                <label asp-for="Description" class="fw-bold control-label"></label>
+                <textarea asp-for="Description" rows="3" class="form-control txtarea" readonly></textarea>
+
+                <label asp-for="YearPublished" class="fw-bold control-label"></label>
+                <input asp-for="YearPublished" class="form-control" readonly />
+
+                <label asp-for="Genre" class="fw-bold control-label"></label>
+                <input asp-for="Genre" class="form-control" readonly />
+
+                <label asp-for="Author" class="fw-bold control-label"></label>
+                <input asp-for="Author.Title" class="form-control" readonly />
+            </div>
+        </div><br />
+        <div class="form-group">
+            <div class="border-primary">
+                <div class="card form-control" style="width: 100%">
+                    <p class="card-text">
+                        <h5 class="card-title">
+                            Reviews
+                        </h5>
+                        <hr />
+                    </p>
+                    <div class="card-body">
+                        @if (Model.Reviews != null)
+                        {
+                            @foreach (var item in Model.Reviews)
+                            {
+                                <p class="card-text">
+                                    <b>@item.AppUser: </b>@item.Comment (@item.Rating out of 5)
+                                    @if (User.Identity.IsAuthenticated && User.IsInRole("User"))
+                                    {
+                                        @if (item.AppUser == User.Identity.Name)
+                                        {
+                                            <a asp-controller="Reviews" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-secondary float-end"><i class="bi bi-pencil-square"></i></a>
+                                            <a asp-controller="Reviews" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-dark float-end"><i class="bi bi-trash"></i></a>
+                                        }
+                                        
+                                    }
+                                    
+                                    <hr />
+                                </p>
+                                
+                            }
+
+                        }
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("User"))
+                        {
+                            <a asp-controller="Reviews" asp-action="Create" class="btn btn-outline-dark float-end" asp-route-id="@Model.Id">Add Review</a>
+                        }
+                        
+                    </div>
+                </div>
+            </div>
+        </div><br />
+        <div class="form-group">
+            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+            {
+                <a asp-action="Edit" class="btn btn-outline-dark float-end" asp-route-id="@Model.Id">Edit</a>
+            }
+            <a class="btn btn-outline-secondary" asp-action="Index">Back to List</a>
+        </div>
+    </div>
+
+
+</div>
+

@@ -1,0 +1,22 @@
+﻿@model IEnumerable<MakeupShop.Models.Book>
+
+<h1 style="color: violet">Book By @ViewBag.Message</h1>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4 col-xs-6 border-primary mb-3">
+            <div class="card mb-3" style="max-width: 520px;">
+                <img class="card-img-top" src="~/images/@item.Image" width="210px" height="300px" asp-append-version="true">
+                
+                <div class="card-body">
+                    <h5 class="card-title">@item.Title</h5>
+                    <textarea rows="3" class="txtarea" style="width: 100%;">@item.Description</textarea>
+                    <p class="card-text"><b>Category: </b>@item.Genre</p>
+                    <p class="card-text"><b>Price: </b>@item.YearPublished</p>
+                    <a asp-action="Details" asp-controller="Book" asp-route-id="@item.Id" class="btn btn-outline-dark"><i class="bi bi-eye-fill"></i> View Details</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

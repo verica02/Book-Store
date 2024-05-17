@@ -1,0 +1,103 @@
+﻿@model MakeupShop.ViewModels.BookGenreViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<form asp-controller="Book" asp-action="Index" method="get">
+    <p>
+        <select class="form-select" asp-for="BookGenre" asp-items="Model.Genres">
+            <option value="">All</option>
+        </select>
+
+        <div class="input-group mb-3">
+            <span class="input-group-text" id="inputGroup-sizing-default">Title</span>
+            <input type="text" asp-for="SearchString" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+        </div>
+
+        <input type="submit" class="btn btn-outline-dark" value="Seach" />
+    </p>
+</form>
+
+
+<div class="text-white ">
+    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+    {
+        <a asp-controller="Book" asp-action="Create" class="btn btn-outline-dark">
+            <i class="bi bi-plus-circle"></i> Add New
+        </a>
+    }
+    
+</div><br />
+
+
+<div class="row">
+    @foreach (var item in Model.Books)
+    {
+        <div class="col-md-4 col-xs-6 border-primary mb-3">
+            <div class="card mb-3" style="max-width: 520px;">
+                <div class="row g-0">
+                    <div class="col-md-12">
+                        <div class="card-header text-white bg-dark">
+                            <p class="card-text">
+                                <h5 class="card-title">
+                                    @item.Title
+                                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                                    {
+                                        <a class="text-white float-end" asp-controller="Book" asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil-square"></i></a>
+                                    }
+                                </h5>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <img src="~/images/@item.Image"
+                             width="210px" height="300px"
+                         asp-append-version="true" />
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card-body">
+                            <textarea rows="3" class="txtarea">@item.Description</textarea>
+                            <p class="card-text"><b>Author: </b>@item.Author.Title</p>
+                            <p class="card-text"><b>Genre: </b>@item.Genre</p>
+                            <p class="card-text"><b>YearPublished: </b>$@item.YearPublished</p>
+                            <p class="card-text">
+                                <b>Average Rating: </b>
+                                @if (item.Reviews != null)
+                                {
+                                    double sum = 0, n = 0;
+
+                                    @foreach (var x in item.Reviews)
+                                    {
+                                        sum += x.Rating;
+                                        n++;
+
+                                    }
+
+                                    double result = sum / n;
+                                    double roundedRes = Math.Round(result, 2);
+                                    @roundedRes
+                                }
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="card-footer">
+                            <p class="card-text">
+                                <a class="btn btn-outline-dark" asp-action="Details" asp-route-id="@item.Id"><i class="bi bi-eye-fill"></i> Show Details</a>
+                                @if (User.Identity.IsAuthenticated && User.IsInRole("User"))
+                                {
+                                    <a class="btn btn-outline-success float-end" asp-action="Buy" asp-controller="UserBook" asp-route-id="@item.Id"><i class="bi bi-cart-fill"></i> Buy</a>
+                                }
+                                @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                                {
+                                    <a class="btn btn-danger text-white float-end" asp-action="Delete" asp-route-id="@item.Id"><i class="bi bi-trash"></i> Delete </a>
+                                }
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

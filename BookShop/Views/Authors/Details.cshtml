@@ -1,0 +1,53 @@
+﻿@model MakeupShop.Models.Author
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+
+
+<div class="row text">
+    <div class="col-md-10 offset-1">
+        <p class=".text-center">
+            <h1>Details for @Model.Title</h1>
+        </p><hr />
+        <div class="row">
+            <div class="col-md-5">
+                <img src="~/images/@Model.Image"
+                     width="310px" height="400px"
+                     asp-append-version="true" />
+            </div>
+            <div class="col-md-7">
+                <label asp-for="Title" class="fw-bold control-label"></label>
+                <input asp-for="Title" class="form-control" readonly />
+
+                <label asp-for="Description" class="fw-bold control-label"></label>
+                <textarea asp-for="Description" rows="3" class="form-control txtarea" readonly></textarea>
+
+                <label asp-for="ReleaseDate" class="fw-bold control-label"></label>
+                <input asp-for="ReleaseDate" class="form-control" readonly /><br />
+
+                @if (Model.CatalogDownloadUrl != null)
+                {
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("User"))
+                    {
+                        <form asp-action="Download" method="post">
+                            <input type="hidden" asp-for="@Model.Id" />
+                            <input type="submit" class="btn btn-outline-dark" value="Download Catalog" />
+                        </form>
+                    }
+                }
+
+            </div>
+        </div><br/>
+        <div class="form-group">
+            @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+            {
+                <a asp-action="Edit" class="btn btn-outline-dark float-end" asp-route-id="@Model?.Id">Edit</a>
+            }
+            <a asp-action="Index" class="btn btn-outline-secondary">Back to List</a>
+        </div>
+    </div>
+</div>
+
+

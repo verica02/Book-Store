@@ -1,0 +1,52 @@
+﻿@model MakeupShop.ViewModels.AuthorModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<div class="row text">
+    <div class="col-md-8 offset-2">
+        <p>
+            <h1>Add Brand</h1>
+        </p>
+        <div class="row">
+            <div class="col-md-8 offset-2">
+                <form enctype="multipart/form-data" asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Author.Title" class="control-label"></label>
+                        <input asp-for="Author.Title" class="form-control" />
+                        <span asp-validation-for="Author.Title" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Author.Description" class="control-label"></label>
+                        <input asp-for="Author.Description" class="form-control" />
+                        <span asp-validation-for="Author.Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Author.ReleaseDate" class="control-label"></label>
+                        <input asp-for="Author.ReleaseDate" class="form-control" />
+                        <span asp-validation-for="Author.ReleaseDate" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="Image" class="control-label"></label>
+                        <div class="custom-file">
+                            <input asp-for="Image" class="custom-file-input" id="customFile">
+                        </div>
+                        <span asp-validation-for="Image" class="text-danger"></span>
+                    </div><br />
+
+                    <div class="form-group">
+                        <input type="submit" value="Create" class="btn btn-outline-dark float-end" />
+                        <a class="btn btn-outline-secondary" asp-action="Index">Back to List</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

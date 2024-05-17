@@ -1,0 +1,20 @@
+﻿@model MakeupShop.ViewModels.UserBookVM
+
+<div class="row text">
+    <div class="col-md-8 offset-2">
+        <p>
+            <h3>Are you sure you want to buy @ViewBag.MakeupName?</h3>
+        </p>
+        <div class="row">
+                <h3>Price: @ViewBag.Price</h3>
+                <br />
+                <form asp-action="Buy">
+                    <input asp-for="BookId" value="@ViewBag.MakeupId" class="visually-hidden" />
+                    <input asp-for="UserBook.AppUser" value="@User.Identity.Name" class="visually-hidden" />
+
+                    <input class="btn btn-outline-success float-end" type="submit" value="Yes" />
+                <a class="btn btn-outline-secondary" asp-controller="Book" asp-action="Index">Cancel</a>
+                </form>
+        </div>
+    </div>    
+</div>

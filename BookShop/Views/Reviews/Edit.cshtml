@@ -1,0 +1,46 @@
+﻿@model MakeupShop.ViewModels.ReviewModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="row text">
+    <div class="col-md-8 offset-2">
+        <p>
+            <h1>Update Review By @User.Identity.Name for @ViewBag.Message</h1>
+        </p>
+        <div class="row">
+            <div class="col-md-8 offset-2">
+                <form asp-action="Edit" enctype="multipart/form-data">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Review.Id" />
+                    <div class="form-group">
+                        <label asp-for="Review.Comment" class="control-label"></label>
+                        <input asp-for="Review.Comment" class="form-control" />
+                        <span asp-validation-for="Review.Comment" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Review.Rating" class="control-label"></label>
+                        <input asp-for="Review.Rating" class="form-control" />
+                        <span asp-validation-for="Review.Rating" class="text-danger"></span>
+                    </div>
+
+                    <input asp-for="Review.AppUser" value="@User.Identity.Name" class="visually-hidden" />
+                    <input asp-for="BookId" value="@ViewBag.MakeupId" class="visually-hidden" />
+
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-outline-dark float-end" />
+                        <a class="btn btn-outline-secondary" asp-action="Details" asp-controller="Book" asp-route-id="@ViewBag.BookId">Back</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
